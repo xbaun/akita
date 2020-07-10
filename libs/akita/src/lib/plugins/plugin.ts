@@ -42,7 +42,7 @@ export abstract class AkitaPlugin<State = any> {
     }
 
     if (property) {
-      return this.getQuery().select(state => getValue(state, this.withStoreName(property)));
+      this.getQuery().select<any>((state) => getValue(state, this.withStoreName(property)));
     }
 
     return this.getQuery().select();
@@ -76,12 +76,12 @@ export abstract class AkitaPlugin<State = any> {
       this.getStore().update(entityId, newState);
     } else {
       if (property) {
-        this.getStore()._setState(state => {
+        this.getStore()._setState((state) => {
           return setValue(state, this.withStoreName(property), newState);
         });
         return;
       }
-      this.getStore()._setState(state => ({ ...state, ...newState }));
+      this.getStore()._setState((state) => ({ ...state, ...newState }));
     }
   }
 

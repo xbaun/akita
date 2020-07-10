@@ -9,11 +9,11 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 import { compareKeys } from './compareKeys';
 import { ReturnTypes } from './types';
 
-export class Query<S> {
+export class Query<T, S = T extends Store<infer I> ? I : T, M extends Store<S> = Store<S>> {
   // @internal
-  __store__: Store<S>;
+  __store__: M;
 
-  constructor(protected store: Store<S>) {
+  constructor(protected store: M) {
     this.__store__ = store;
     if (isDev()) {
       // @internal
@@ -43,15 +43,15 @@ export class Query<S> {
     if (isFunction(project)) {
       mapFn = project;
     } else if (isString(project)) {
-      mapFn = state => state[project];
+      mapFn = (state) => state[project];
     } else if (Array.isArray(project)) {
       return this.store
-        ._select(state => state)
+        ._select((state) => state)
         .pipe(
           distinctUntilChanged(compareKeys(project)),
-          map(state => {
+          map((state) => {
             if (isFunction(project[0])) {
-              return (project as ((state: S) => any)[]).map(func => func(state));
+              return (project as ((state: S) => any)[]).map((func) => func(state));
             }
 
             return (project as (keyof S)[]).reduce((acc, k) => {
@@ -61,7 +61,7 @@ export class Query<S> {
           })
         ) as any;
     } else {
-      mapFn = state => state;
+      mapFn = (state) => state;
     }
 
     return this.store._select(mapFn);
@@ -75,7 +75,7 @@ export class Query<S> {
    * this.query.selectLoading().subscribe(isLoading => {})
    */
   selectLoading() {
-    return this.select(state => (state as S & { loading: boolean }).loading);
+    return this.select((state) => (state as S & { loading: boolean }).loading);
   }
 
   /**
@@ -86,7 +86,7 @@ export class Query<S> {
    * this.query.selectError().subscribe(error => {})
    */
   selectError<ErrorType = any>(): Observable<ErrorType> {
-    return this.select(state => (state as S & { error: ErrorType }).error);
+    return this.select((state) => (state as S & { error: ErrorType }).error);
   }
 
   /**

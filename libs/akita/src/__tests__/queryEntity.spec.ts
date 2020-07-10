@@ -500,7 +500,7 @@ describe('State', () => {
 });
 
 const todosStore = new TodosStore();
-const queryTodos = new QueryEntity(todosStore);
+const queryTodos = new QueryEntity<TodosStore>(todosStore);
 
 describe('getAll', () => {
   beforeEach(() => {
@@ -663,7 +663,7 @@ describe('selectAll', () => {
 describe('Many', () => {
   jest.useFakeTimers();
   const todosStore = new TodosStore();
-  const queryTodos = new QueryEntity(todosStore);
+  const queryTodos = new QueryEntity<TodosStore>(todosStore);
   let spy;
 
   beforeEach(() => {
@@ -1060,7 +1060,7 @@ describe('selectAll - limit to and filterBy', () => {
 
 describe('selectAll - limit to and filterBy and sorting', () => {
   const store = new TodosStore();
-  const query = new QueryEntity<any, any>(store);
+  const query = new QueryEntity(store);
 
   const elements = [
     { id: 4, value: 5 },

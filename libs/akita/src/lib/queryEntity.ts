@@ -32,7 +32,11 @@ import { EntityState, getEntityType, getIDType, HashMap, ItemPredicate, OrArray,
  *
  *
  */
-export class QueryEntity<S extends EntityState, EntityType = getEntityType<S>, IDType = getIDType<S>> extends Query<S> {
+export class QueryEntity<T extends EntityState | EntityStore<S>, S extends EntityState = T extends EntityStore<infer I> ? I : T, EntityType = getEntityType<S>, IDType = getIDType<S>> extends Query<
+  T,
+  S,
+  EntityStore<S>
+> {
   ui: EntityUIQuery<any, EntityType>;
   protected store: EntityStore<S>;
 
