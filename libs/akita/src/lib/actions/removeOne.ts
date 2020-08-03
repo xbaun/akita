@@ -1,8 +1,8 @@
 import { coerceArray } from '../coerceArray';
 import { EntityIdOf, EntityStore } from '../entityStore';
 import { StateOf } from '../store';
-import { Action, newActionType } from './core/action';
-import { ActionArgsOf, ActionOf, Commit } from './core/commit';
+import { Action } from './core/action';
+import { ActionArgsOf, ActionOf, Commit, newCommitType } from './core/commit';
 import { EntityStoreUtils } from './utils/entityStoreUtils';
 
 export const RemoveOneType = 'REMOVE_ONE' as const;
@@ -10,7 +10,7 @@ export const RemoveOneType = 'REMOVE_ONE' as const;
 export class RemoveOne<TStore extends EntityStore> extends Commit<TStore, Action<typeof RemoveOneType, (id: EntityIdOf<TStore>) => void>> {
   static type = RemoveOneType;
 
-  static Type = <TStore extends EntityStore>() => newActionType<RemoveOne<TStore>>(RemoveOneType);
+  static Type = <TStore extends EntityStore>() => newCommitType<RemoveOne<TStore>>(RemoveOneType);
 
   constructor(...args: ActionArgsOf<RemoveOne<TStore>>) {
     super({ type: RemoveOne.type, args });

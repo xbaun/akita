@@ -1,7 +1,7 @@
 import { EntityIdOf, EntityOf, EntityStore } from '../entityStore';
 import { StateOf } from '../store';
-import { Action, newActionType } from './core/action';
-import { ActionArgsOf, ActionOf, Commit } from './core/commit';
+import { Action } from './core/action';
+import { ActionArgsOf, ActionOf, Commit, newCommitType } from './core/commit';
 import { EntityStoreUtils } from './utils/entityStoreUtils';
 
 export const UpdateManyByFnType = 'UPDATE_MANY_BY_FN' as const;
@@ -12,7 +12,7 @@ export class UpdateManyByFn<TStore extends EntityStore> extends Commit<
 > {
   static type = UpdateManyByFnType;
 
-  static Type = <TStore extends EntityStore>() => newActionType<UpdateManyByFn<TStore>>(UpdateManyByFnType);
+  static Type = <TStore extends EntityStore>() => newCommitType<UpdateManyByFn<TStore>>(UpdateManyByFnType);
 
   constructor(...args: ActionArgsOf<UpdateManyByFn<TStore>>) {
     super({ type: UpdateManyByFn.type, args });

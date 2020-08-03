@@ -14,3 +14,13 @@ export abstract class Commit<TStore extends Store, TAction extends Action = Acti
 
   abstract reduce(action: TAction, state: StateOf<TStore>, store: TStore): StateOf<TStore>;
 }
+
+export interface CommitType<TCommit extends Commit<any, any>> {
+  type: TCommit['action']['type'];
+  // @internal
+  __COMMIT__: TCommit;
+}
+
+export function newCommitType<TCommit extends Commit<any, any>>(type: TCommit['action']['type']) {
+  return { type } as CommitType<TCommit>;
+}

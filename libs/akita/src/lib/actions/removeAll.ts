@@ -1,14 +1,14 @@
 import { EntityStore } from '../entityStore';
 import { StateOf } from '../store';
-import { Action, newActionType } from './core/action';
-import { ActionArgsOf, ActionOf, Commit } from './core/commit';
+import { Action } from './core/action';
+import { ActionArgsOf, ActionOf, Commit, newCommitType } from './core/commit';
 
 export const RemoveAllType = 'REMOVE_ALL' as const;
 
 export class RemoveAll<TStore extends EntityStore> extends Commit<TStore, Action<typeof RemoveAllType, () => void>> {
   static type = RemoveAllType;
 
-  static Type = <TStore extends EntityStore>() => newActionType<RemoveAll<TStore>>(RemoveAllType);
+  static Type = <TStore extends EntityStore>() => newCommitType<RemoveAll<TStore>>(RemoveAllType);
 
   constructor(...args: ActionArgsOf<RemoveAll<TStore>>) {
     super({ type: RemoveAll.type, args });

@@ -5,15 +5,15 @@ import { remember } from './utils/rxjs/remember';
 
 /**
  *
- * Select many entities from the store by id.
+ * Select an entity from the store by id.
  *
  * @example
- *  store.state$.pipe(selectMany([1, 2, 3]))
+ *  store.state$.pipe(selectOne(2)).subscribe(v => {})
  */
-export function selectMany<S extends EntityState<EntityType, IdType>, EntityType = getEntityType<S>, IdType extends ID = getIDType<S>>(ids: IdType[]) {
+export function selectOne<S extends EntityState<EntityType, IdType>, EntityType = getEntityType<S>, IdType extends ID = getIDType<S>>(id: IdType) {
   return (source: Observable<S>) =>
     source.pipe(
-      map((state) => ids.map((id) => state.entities[id])),
+      map((state) => state.entities[id]),
       distinctUntilChanged()
     );
 }

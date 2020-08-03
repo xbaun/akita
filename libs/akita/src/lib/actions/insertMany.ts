@@ -1,7 +1,7 @@
 import { EntityOf, EntityStore } from '../entityStore';
 import { StateOf } from '../store';
-import { Action, newActionType } from './core/action';
-import { ActionArgsOf, ActionOf, Commit } from './core/commit';
+import { Action } from './core/action';
+import { ActionArgsOf, ActionOf, Commit, newCommitType } from './core/commit';
 import { EntityStoreUtils } from './utils/entityStoreUtils';
 
 export const InsertManyType = 'INSERT_MANY' as const;
@@ -9,7 +9,7 @@ export const InsertManyType = 'INSERT_MANY' as const;
 export class InsertMany<TStore extends EntityStore> extends Commit<TStore, Action<typeof InsertManyType, (entities: EntityOf<TStore>[]) => void>> {
   static type = InsertManyType;
 
-  static Type = <TStore extends EntityStore>() => newActionType<InsertMany<TStore>>(InsertManyType);
+  static Type = <TStore extends EntityStore>() => newCommitType<InsertMany<TStore>>(InsertManyType);
 
   constructor(...args: ActionArgsOf<InsertMany<TStore>>) {
     super({ type: InsertMany.type, args });

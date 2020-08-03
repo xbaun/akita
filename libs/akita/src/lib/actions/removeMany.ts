@@ -1,7 +1,7 @@
 import { EntityIdOf, EntityStore } from '../entityStore';
 import { StateOf } from '../store';
-import { Action, newActionType } from './core/action';
-import { ActionArgsOf, ActionOf, Commit } from './core/commit';
+import { Action } from './core/action';
+import { ActionArgsOf, ActionOf, Commit, newCommitType } from './core/commit';
 import { EntityStoreUtils } from './utils/entityStoreUtils';
 
 export const RemoveManyType = 'REMOVE_MANY' as const;
@@ -9,7 +9,7 @@ export const RemoveManyType = 'REMOVE_MANY' as const;
 export class RemoveMany<TStore extends EntityStore> extends Commit<TStore, Action<typeof RemoveManyType, (entityIds: EntityIdOf<TStore>[]) => void>> {
   static type = RemoveManyType;
 
-  static Type = <TStore extends EntityStore>() => newActionType<RemoveMany<TStore>>(RemoveManyType);
+  static Type = <TStore extends EntityStore>() => newCommitType<RemoveMany<TStore>>(RemoveManyType);
 
   constructor(...args: ActionArgsOf<RemoveMany<TStore>>) {
     super({ type: RemoveMany.type, args });

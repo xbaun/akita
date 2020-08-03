@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { EntityState, getEntityType, getIDType, ID } from '../types';
-import { remember } from './utils/rxjs/remember';
 
 /**
  *
@@ -14,6 +13,6 @@ export function selectManyFn<S extends EntityState<EntityType, IdType>, EntityTy
   return (source: Observable<S>) =>
     source.pipe(
       map((state) => state.ids.filter((id) => predicate(state.entities[id])).map((id) => state.entities[id])),
-      remember()
+      distinctUntilChanged()
     );
 }

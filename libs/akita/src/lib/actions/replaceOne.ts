@@ -1,7 +1,7 @@
 import { EntityOf, EntityStore } from '../entityStore';
 import { StateOf } from '../store';
-import { Action, newActionType } from './core/action';
-import { ActionArgsOf, ActionOf, Commit } from './core/commit';
+import { Action } from './core/action';
+import { ActionArgsOf, ActionOf, Commit, newCommitType } from './core/commit';
 import { EntityStoreUtils } from './utils/entityStoreUtils';
 
 export const ReplaceOneType = 'REPLACE_ONE' as const;
@@ -9,7 +9,7 @@ export const ReplaceOneType = 'REPLACE_ONE' as const;
 export class ReplaceOne<TStore extends EntityStore> extends Commit<TStore, Action<typeof ReplaceOneType, (entity: EntityOf<TStore>, options?: { allowInsert: boolean }) => void>> {
   static type = ReplaceOneType;
 
-  static Type = <TStore extends EntityStore>() => newActionType<ReplaceOne<TStore>>(ReplaceOneType);
+  static Type = <TStore extends EntityStore>() => newCommitType<ReplaceOne<TStore>>(ReplaceOneType);
 
   constructor(...args: ActionArgsOf<ReplaceOne<TStore>>) {
     super({ type: ReplaceOne.type, args });

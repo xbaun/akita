@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { EntityState, getEntityType, getIDType, ID } from '../types';
-import { remember } from './utils/rxjs/remember';
 
 /**
  *
@@ -17,6 +16,6 @@ export function selectOneByFn<S extends EntityState<EntityType, IdType>, EntityT
         const id = state.ids.find((id) => predicate(state.entities[id]));
         return id ? state.entities[id] : undefined;
       }),
-      remember()
+      distinctUntilChanged()
     );
 }

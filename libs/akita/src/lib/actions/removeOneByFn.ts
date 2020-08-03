@@ -1,7 +1,7 @@
 import { EntityIdOf, EntityOf, EntityStore } from '../entityStore';
 import { StateOf } from '../store';
-import { Action, newActionType } from './core/action';
-import { ActionArgsOf, ActionOf, Commit } from './core/commit';
+import { Action } from './core/action';
+import { ActionArgsOf, ActionOf, Commit, newCommitType } from './core/commit';
 import { EntityStoreUtils } from './utils/entityStoreUtils';
 
 export const RemoveOneByFnType = 'REMOVE_ONE_BY_FN' as const;
@@ -9,7 +9,7 @@ export const RemoveOneByFnType = 'REMOVE_ONE_BY_FN' as const;
 export class RemoveOneByFn<TStore extends EntityStore> extends Commit<TStore, Action<typeof RemoveOneByFnType, (predicate: (id: EntityIdOf<TStore>, entity: EntityOf<TStore>) => boolean) => void>> {
   static type = RemoveOneByFnType;
 
-  static Type = <TStore extends EntityStore>() => newActionType<RemoveOneByFn<TStore>>(RemoveOneByFnType);
+  static Type = <TStore extends EntityStore>() => newCommitType<RemoveOneByFn<TStore>>(RemoveOneByFnType);
 
   constructor(...args: ActionArgsOf<RemoveOneByFn<TStore>>) {
     super({ type: RemoveOneByFn.type, args });
